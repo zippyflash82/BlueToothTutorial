@@ -3,6 +3,7 @@ package com.example.bluetoothtutorial
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -24,6 +25,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // Ble coding
+        val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val bluetoothAdapter_ble = bluetoothManager.adapter
+
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         pairedDevices = bluetoothAdapter?.bondedDevices
 
@@ -85,6 +90,11 @@ class MainActivity : AppCompatActivity() {
                 putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,300)
             }
             startActivity(discoverableIntent)
+        }
+
+        btn_ble_activity.setOnClickListener {
+            val intent = Intent(this,BleActivity::class.java)
+            startActivity(intent)
         }
 
 
